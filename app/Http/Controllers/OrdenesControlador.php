@@ -60,18 +60,38 @@ class OrdenesControlador extends Controller
     /**
      * Mostrar resumen de una orden
      */
-    public function show($id, Request $request)
+    public function show(Request $request)
     {
         $token = $request->header('Authorization');
         $orden_activa = Ordenes::where("token", $token)->get();
 
-        $orden = DB::table('orders')
-        ->join('products','orders.id_product', '=', 'products.id')
-        ->where('orders.token' , '=', $token)
-        ->select('orders.customer_name AS nombre', 'orders.customer_email AS email', 'products.name AS nombre_producto', 'products.description AS descripcion_producto', 'products.price AS precio_producto', 'orders.id AS id_orden')
-        ->get();
+        if(count($orden_activa) > 0){
 
-        return json_encode($orden, true);
+            $orden = DB::table('orders')
+            ->join('products','orders.id_product', '=', 'products.id')
+            ->where('orders.token' , '=', $token)
+            ->select('orders.customer_name AS nombre', 'orders.customer_email AS email', 'products.name AS nombre_producto', 'products.description AS descripcion_producto', 'products.price AS precio_producto', 'orders.id AS id_orden')
+            ->get();
+
+            $respuesta = array(
+
+                "status" => 200,
+                "detalle" => "Orden valida",
+                "orden" => $orden
+    
+            );
+
+        }else{
+
+            $respuesta = array(
+
+                "status" => 404,
+                "detalle" => "Orden no valida"
+    
+            );
+        }
+
+        return json_encode($respuesta, true);
 
     }
     
@@ -95,7 +115,7 @@ class OrdenesControlador extends Controller
             // Validar datos
             $validator = Validator::make($datos, [
                 'customer_name' => 'required|string|max:80',
-                'customer_email' => 'required|string|email|max:120|unique:orders',
+                'customer_email' => 'required|string|email|max:120',
                 'customer_mobile' => 'required|string|max:40',
                 'id_product' => 'required|string|max:40',
                 'status' => 'required|string|max:20'

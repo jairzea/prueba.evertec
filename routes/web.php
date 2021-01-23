@@ -37,4 +37,4 @@ Route::resource('/editar_producto', 'ProductosControlador');
 Route::resource('/borrar_producto', 'ProductosControlador');
 
 // Ver una orden activa - resumen
-Route::resource('/orden_activa', 'OrdenesControlador');
+Route::get('/orden_activa', 'OrdenesControlador@show');

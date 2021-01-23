@@ -26,15 +26,33 @@ class OrdenesTest extends TestCase
     }
 
     /** @test */
-    function cargarRutaRegistroOrdenes()
+    function testRegistroOrdenes()
     {
         $this->post('/registro_ordenes', [
-            "nombre" => "Lisney Hernandez",
-            "email"  => "lisne@mail.com",
+            "nombre" => "Prueba de registro",
+            "email"  => "prueba@mail.com",
             "telefono" => "3217098185",
             "id_producto" => "2"
         ])
-            ->assertStatus(200)
-            ->assertSee('Registro exitoso');
+        ->assertStatus(200)
+        ->assertSee('Registro exitoso');
+
+        $this->assertDatabaseHas('orders', [
+            "customer_name" => "Prueba de registro",
+            "customer_email"  => "prueba@mail.com",
+            "customer_mobile" => "3217098185",
+            "id_product" => "2",
+            "status" => "CREATED"
+        ]);
+    }
+
+    /** @tests */
+    function testVerResumenOrden()
+    {
+        $this->get('/orden_activa', [
+            "Authorization" => 'Basic YTJ5YTEwYWUuQ21PZFdhaUExVmg1eGhPTlFYUy5TSWhnVURiakQ5RWNLclJWeGZRbGJlNkFiczkxTEphOm8yeW8xMm9YVWRUa01vSXFTZFFaeVFBS3h5V1Quc1RJWWs3SG8zNXpQVFdldDFyeWJObXVwcmNqcDZZQw=='
+        ])
+             ->assertStatus(200)
+             ->assertSee('Orden valida');
     }
 }
