@@ -12,6 +12,10 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        //
+        'http://apirest-tienda.evertec/registro_ordenes',
+        'http://apirest-tienda.evertec/registro_productos',
+        'http://apirest-tienda.evertec/editar_producto/*',
+        'http://apirest-tienda.evertec/borrar_producto/*',
+        'http://apirest-tienda.evertec/orden_activa'
     ];
 }

@@ -19,3 +19,14 @@
 
 *Nota: Debe tener en cuenta los puertos que usa para su servidor Apache*
 
+>Conexión a la base de datos
+>>Modifique el archivo .env en el siguiente apartado, especificando los datos de conexión:
+```HTML
+    DB_CONNECTION=mysql
+    DB_HOST="servidorde bd"
+    DB_PORT="puerto"
+    DB_DATABASE="nombre bd"
+    DB_USERNAME="usuario bd"
+    DB_PASSWORD="password bd"
+```
+
