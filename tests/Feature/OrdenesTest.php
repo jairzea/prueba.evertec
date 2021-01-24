@@ -35,7 +35,7 @@ class OrdenesTest extends TestCase
             "id_producto" => "2"
         ])
         ->assertStatus(200)
-        ->assertSee('Registro exitoso');
+        ->assertSee('Orden registrada');
 
         $this->assertDatabaseHas('orders', [
             "customer_name" => "Prueba de registro",

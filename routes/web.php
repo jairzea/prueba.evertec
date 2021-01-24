@@ -36,5 +36,5 @@ Route::resource('/editar_producto', 'ProductosControlador');
 // Borrar un producto en la base de datos
 Route::resource('/borrar_producto', 'ProductosControlador');
 
-// Ver una orden activa - resumen
+// Ver resumen de la orden
 Route::get('/orden_activa', 'OrdenesControlador@show');

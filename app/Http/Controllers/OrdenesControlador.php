@@ -127,7 +127,7 @@ class OrdenesControlador extends Controller
                 $error = array(
 
                     "status" => 404,
-                    "detalle" => "Registro con errores"
+                    "detalle" => "Registro con errores, verifique la información enviada"
         
                 );
 
@@ -157,7 +157,7 @@ class OrdenesControlador extends Controller
                 $respuesta = array(
 
                     "status" => 200,
-                    "detalle" => "Registro exitoso",
+                    "detalle" => "Orden registrada",
                     "credenciales"=>array("id_cliente" => $id_cliente,
                                           "llave_secreta" => $llave_secreta)
         
@@ -172,7 +172,7 @@ class OrdenesControlador extends Controller
             $error = array(
 
                 "status" => 404,
-                "detalle" => "Registro con errores"
+                "detalle" => "Registro con errores - datos vacios"
     
             );
 

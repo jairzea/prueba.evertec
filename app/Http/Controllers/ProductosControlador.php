@@ -68,7 +68,7 @@ class ProductosControlador extends Controller
                 $error = array(
 
                     "status" => 404,
-                    "detalle" => "Registro con errores"
+                    "detalle" => "Registro con errores, verifique la información enviada"
         
                 );
 
@@ -128,7 +128,7 @@ class ProductosControlador extends Controller
             $validator = Validator::make($datos, [
                 'name' => 'required|string|max:80',
                 'description' => 'required|string|max:255',
-                'price' => 'numeric|required|min:10|max:99999999',
+                'price' => 'numeric|required|min:10',
             ]);
 
             // Si falla la validación
@@ -137,7 +137,7 @@ class ProductosControlador extends Controller
                 $error = array(
 
                     "status" => 404,
-                    "detalle" => "Registro con errores"
+                    "detalle" => "Registro con errores, verifique la información enviada"
         
                 );
 
