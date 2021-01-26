@@ -42,16 +42,19 @@ class ProcesarPago extends Controller
             'userAgent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36',
         ];
 
-
         $response = $placetopay->request($request);
         if ($response->isSuccessful()) {
-            // STORE THE $response->requestId() and $response->processUrl() on your DB associated with the payment order
-            // Redirect the client to the processUrl or display it on the JS extension
-            //header('Location: ' . $response->processUrl());
-            var_dump($response->processUrl());
+
+            $respPlace = array('id_resp' => $response->requestId(),
+                               'url' => $response->processUrl());
+
+            echo json_encode($respPlace);
+
         } else {
-            // There was some error so check the message and log it
-            $response->status()->message();
+
+            $respPlace = $response->status()->message();
+
+            echo json_encode($respPlace);
         }
 
 
