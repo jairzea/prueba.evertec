@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Ordenes;
-use App\Productos;
+use App\VistaOrdenesProductos;
 
 class OrdenesControlador extends Controller
 {
@@ -56,7 +56,59 @@ class OrdenesControlador extends Controller
 
         return json_encode($respuesta, true);
     }
+
+    /**
+     * Mostrar la vista de ordenes y productos
+     */
+    public function vistaOrdenesProductos()
+    {
+        $ordenes_productos = VistaOrdenesProductos::all();
+
+        if(count($ordenes_productos) > 0){
+
+            $respuesta = $ordenes_productos;
+
+        }else{
+
+            $respuesta = array(
+
+                "status" => 200,
+                "total_registros" => 0,
+                "detalles"=>'No hay ordenes registradas'
     
+            );
+        }
+
+        return json_encode($respuesta, true);
+    }
+
+    /**
+     * Consultar las ordenes de un usuario
+     */
+    public function ordenesDeUsuario(Request $request)
+    {
+        $email = trim($request->input('email'));
+
+        $ordenes_usr = VistaOrdenesProductos::where("email", $email)->get();
+
+        if(count($ordenes_usr) > 0){
+
+            $respuesta = $ordenes_usr;
+
+        }else{
+
+            $respuesta = array(
+
+                "status" => 400,
+                "total_registros" => 0,
+                "detalles"=>'No hay ordenes registradas'
+    
+            );
+        }
+
+        return json_encode($respuesta, true);
+    }
+
     /**
      * Mostrar resumen de una orden
      */
@@ -70,7 +122,7 @@ class OrdenesControlador extends Controller
             $orden = DB::table('orders')
             ->join('products','orders.id_product', '=', 'products.id')
             ->where('orders.token' , '=', $token)
-            ->select('orders.customer_name AS nombre', 'orders.customer_email AS email', 'products.name AS nombre_producto', 'products.description AS descripcion_producto', 'products.price AS precio_producto', 'orders.id AS id_orden', 'orders.customer_mobile AS telefono')
+            ->select('orders.customer_name AS nombre', 'orders.customer_email AS email', 'products.name AS nombre_producto', 'products.description AS descripcion_producto', 'products.price AS precio_producto', 'products.img AS imagen_producto', 'orders.id AS id_orden', 'orders.customer_mobile AS telefono')
             ->get();
 
             $respuesta = array(

@@ -18,6 +18,8 @@ class VerifyCsrfToken extends Middleware
         'http://apirest-tienda.evertec/borrar_producto/*',
         'http://apirest-tienda.evertec/orden_activa',
         'http://apirest-tienda.evertec/pagar',
-        'http://apirest-tienda.evertec/respuestaPago'
+        'http://apirest-tienda.evertec/respuestaPago',
+        'http://apirest-tienda.evertec/ver_ordenes_productos',
+        'http://apirest-tienda.evertec/ver_ordenes_usuario'
     ];
 }

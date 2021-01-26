@@ -53,8 +53,8 @@ class ProductosControlador extends Controller
             // Validar datos
             $validator = Validator::make($datos, [
                 'name' => 'required|string|max:80',
-                'description' => 'required|string|max:255',
-                'price' => 'numeric|required|min:10|max:99999999',
+                'description' => 'required|string|max:2000',
+                'price' => 'numeric|required|min:10',
             ]);
 
             // Si falla la validación
@@ -125,8 +125,8 @@ class ProductosControlador extends Controller
             // Validar datos
             $validator = Validator::make($datos, [
                 'name' => 'required|string|max:80',
-                'description' => 'required|string|max:255',
-                'price' => 'numeric|required|min:10|max:99999999',
+                'description' => 'required|string|max:2000',
+                'price' => 'numeric|required|min:10',
             ]);
 
             // Si falla la validación

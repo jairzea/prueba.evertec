@@ -44,3 +44,9 @@ Route::post('/pagar', 'ProcesarPago@pagoPlaceToPay');
 
 // Recepción de respuesta de pasarela de pago
 Route::post('/respuestaPago', 'ProcesarPago@respuestaPlaceToPay');
+
+// Ruta para consultar la vista de ordenes y productos
+Route::get('/ver_ordenes_productos', 'OrdenesControlador@vistaOrdenesProductos');
+
+// Ruta para consultar la ordenes de un usuario
+Route::post('/ver_ordenes_usuario', 'OrdenesControlador@ordenesDeUsuario');
