@@ -38,3 +38,6 @@ Route::resource('/borrar_producto', 'ProductosControlador');
 
 // Ver resumen de la orden
 Route::get('/orden_activa', 'OrdenesControlador@show');
+
+// Ver resumen de la orden
+Route::post('/pagar', 'ProcesarPago@pagoPlaceToPay');

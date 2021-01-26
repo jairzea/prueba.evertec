@@ -70,7 +70,7 @@ class OrdenesControlador extends Controller
             $orden = DB::table('orders')
             ->join('products','orders.id_product', '=', 'products.id')
             ->where('orders.token' , '=', $token)
-            ->select('orders.customer_name AS nombre', 'orders.customer_email AS email', 'products.name AS nombre_producto', 'products.description AS descripcion_producto', 'products.price AS precio_producto', 'orders.id AS id_orden')
+            ->select('orders.customer_name AS nombre', 'orders.customer_email AS email', 'products.name AS nombre_producto', 'products.description AS descripcion_producto', 'products.price AS precio_producto', 'orders.id AS id_orden', 'orders.customer_mobile AS telefono')
             ->get();
 
             $respuesta = array(

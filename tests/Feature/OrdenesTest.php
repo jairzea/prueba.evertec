@@ -50,7 +50,7 @@ class OrdenesTest extends TestCase
     function testVerResumenOrden()
     {
         $this->get('/orden_activa', [
-            "Authorization" => 'Basic YTJ5YTEwYWUuQ21PZFdhaUExVmg1eGhPTlFYUy5TSWhnVURiakQ5RWNLclJWeGZRbGJlNkFiczkxTEphOm8yeW8xMm9YVWRUa01vSXFTZFFaeVFBS3h5V1Quc1RJWWs3SG8zNXpQVFdldDFyeWJObXVwcmNqcDZZQw=='
+            "Authorization" => 'Basic YTJ5YTEwYUwuTmNEYkR1RHk2UWEuSFlkWGZJS3VXSjlKY3phVzFHMFA5Y3dUMEJSQVBrcVFtOXVGanZhOm8yeW8xMm9COFBQQ1hjOGQ3MzdJakVEcWlXLmcuSkEvcThZVXZlTFR5dVRjdXduTFY0Uk5KZkVEMGlRcQ=='
         ])
              ->assertStatus(200)
              ->assertSee('Orden valida');

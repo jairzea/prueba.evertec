@@ -42,7 +42,7 @@ class ProductosTest extends TestCase
     /** @test */
     function testActualizarProductos()
     {
-        $this->put('/editar_producto/6', [
+        $this->put('/editar_producto/3', [
             "nombre" => "Prueba editado",
             "descripcion"  => "Este producto ha sido editado por una prueba unitaria",
             "precio" => "5500000",
