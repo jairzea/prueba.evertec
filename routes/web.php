@@ -31,7 +31,7 @@ Route::resource('/productos', 'ProductosControlador');
 Route::resource('/registro_productos', 'ProductosControlador');
 
 // Editar un producto en la base de datos
-Route::resource('/editar_producto', 'ProductosControlador');
+Route::post('/editar_producto', 'ProductosControlador@update');
 
 // Borrar un producto en la base de datos
 Route::resource('/borrar_producto', 'ProductosControlador');
@@ -39,5 +39,8 @@ Route::resource('/borrar_producto', 'ProductosControlador');
 // Ver resumen de la orden
 Route::get('/orden_activa', 'OrdenesControlador@show');
 
-// Ver resumen de la orden
+// Obtener url de pago de PlaceToPay
 Route::post('/pagar', 'ProcesarPago@pagoPlaceToPay');
+
+// Recepción de respuesta de pasarela de pago
+Route::post('/respuestaPago', 'ProcesarPago@respuestaPlaceToPay');

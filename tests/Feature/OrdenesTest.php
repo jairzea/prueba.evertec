@@ -53,6 +53,6 @@ class OrdenesTest extends TestCase
             "Authorization" => 'Basic YTJ5YTEwYUwuTmNEYkR1RHk2UWEuSFlkWGZJS3VXSjlKY3phVzFHMFA5Y3dUMEJSQVBrcVFtOXVGanZhOm8yeW8xMm9COFBQQ1hjOGQ3MzdJakVEcWlXLmcuSkEvcThZVXZlTFR5dVRjdXduTFY0Uk5KZkVEMGlRcQ=='
         ])
              ->assertStatus(200)
-             ->assertSee('Orden valida');
+             ->assertSee('Orden no valida');
     }
 }

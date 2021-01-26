@@ -6,12 +6,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Dnetix\Redirection\Contracts\Gateway;
 use Dnetix\Redirection\PlacetoPay;
+use App\Ordenes;
 
 
 class ProcesarPago extends Controller
 {
     // Creación del objeto Pacetopay
-    public function pagoPlaceToPay()
+    public function pagoPlaceToPay(Request $request)
     {
 
         $placetopay = new PlacetoPay([
@@ -27,26 +28,31 @@ class ProcesarPago extends Controller
         //Creating a random reference for the test
         $reference = 'TEST_' . time();
 
+        $id = $request->input("id_orden");
+
         $request = [
             'payment' => [
                 'reference' => $reference,
-                'description' => 'Testing payment',
+                'description' => $request->input("descripcion"),
                 'amount' => [
-                    'currency' => 'USD',
-                    'total' => 120,
+                    'currency' => 'COP',
+                    'total' => $request->input("precio"),
                 ],
             ],
             'expiration' => date('c', strtotime('+2 days')),
-            'returnUrl' => 'http://example.com/response?reference=' . $reference,
+            'returnUrl' => 'http://apirest-tienda.evertec/respuestaPago?reference=' . $reference,
             'ipAddress' => '127.0.0.1',
             'userAgent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36',
         ];
 
         $response = $placetopay->request($request);
+
         if ($response->isSuccessful()) {
 
-            $respPlace = array('id_resp' => $response->requestId(),
-                               'url' => $response->processUrl());
+            $respPlace = array('requestId' => $response->requestId(),
+                               'processUrl' => $response->processUrl());
+
+            $actualicar_orden = Ordenes::where("id", $id)->update($respPlace);
 
             echo json_encode($respPlace);
 
@@ -57,6 +63,18 @@ class ProcesarPago extends Controller
             echo json_encode($respPlace);
         }
 
+
+    }
+
+    public function respuestaPlaceToPay(Request $request)
+    {
+        $respPlace = array('reference' => $request->get("requestId"));
+
+        $request = $request->get("requestId");
+
+        $actualizar_orden = Ordenes::where("requestId", $request)->update($respPlace);
+
+        return json_encode($actualizar_orden);
 
     }
 }

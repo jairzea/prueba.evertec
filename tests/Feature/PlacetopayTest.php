@@ -15,7 +15,23 @@ class PlacetopayTest extends TestCase
      */
     function cargarRutaPago()
     {
-        $this->post('/pagar')
+        $this->post('/pagar', [
+            'descripcion' => "Prueba de registro, descripcion",
+            'precio' => "10000"
+        ])
+             ->assertStatus(200);
+    }
+
+    /**
+     * Probando URL de resuesta de pago.
+     *
+     * @test
+     */
+    function cargarRutaRespuestaPago()
+    {
+        $this->get('/respuestaPago',[
+            'requestId' => '5676'
+        ])
              ->assertStatus(200);
     }
 }
