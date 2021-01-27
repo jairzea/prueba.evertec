@@ -56,3 +56,6 @@
 
 
 *Tambien debe cambiar en el controlador "ProcesarPago.php" la url o dominio base de la tienda (frontend), en la linea 125 (header ("Location: http://localhost/frontend.evertec/");)*
+
+>Error de CORS
+>> Al momento de desplegar en producción, es posible que el hosting donde desplegaras, tenga desahabilitada la extensión PDO y eso provoque un bloqueo de los endpoint, rectifica la habilitación en la administracion de PHP de tu cpanel, en mi caso la extensión (nd_pdo_mysql) se encontraba deshabilitada.
