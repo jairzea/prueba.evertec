@@ -49,32 +49,68 @@ class ProcesarPago extends Controller
 
         if ($response->isSuccessful()) {
 
-            $respPlace = array('requestId' => $response->requestId(),
-                               'processUrl' => $response->processUrl());
+            $respPlace = array(
+                'requestId' => $response->requestId(),
+                'reference' => $reference,
+                'processUrl' => $response->processUrl()
+            );
 
             $actualicar_orden = Ordenes::where("id", $id)->update($respPlace);
 
             echo json_encode($respPlace);
-
         } else {
 
             $respPlace = $response->status()->message();
 
             echo json_encode($respPlace);
         }
-
-
     }
 
     public function respuestaPlaceToPay(Request $request)
     {
-        $respPlace = array('reference' => $request->get("requestId"));
+        $placetopay = new PlacetoPay([
+            'login' => '6dd490faf9cb87a9862245da41170ff2',
+            'tranKey' => '024h1IlD',
+            'url' => 'https://dev.placetopay.com/redirection/',
+            'rest' => [
+                'timeout' => 45,
+                'connect_timeout' => 30,
+            ]
+        ]);
 
-        $request = $request->get("requestId");
+        $referencia = $request->get("reference");
 
-        $actualizar_orden = Ordenes::where("requestId", $request)->update($respPlace);
+        $orden = Ordenes::where("reference", $referencia)->get();
 
-        return json_encode($actualizar_orden);
+        foreach ($orden as $key => $value) {
 
+            $requestId = $value['requestId'];
+        }
+
+        $response = $placetopay->query($requestId);
+
+        if ($response->isSuccessful()) {
+
+            if ($response->status()->isApproved()) {
+         
+            }
+
+            $datos = ['status' => $response->payment[0]->status()->status(),
+                      'message' => $response->payment[0]->status()->message(),
+                      'date_trans' => $response->payment[0]->status()->date(),
+                      'method' => $response->payment[0]->paymentMethodName(),
+                      'ref_int' => $response->payment[0]->internalReference(),
+                      'bank' => $response->payment[0]->issuerName()
+                    ];
+
+            $actualicar_orden = Ordenes::where("reference", $referencia)->update($datos);
+
+            return json_encode($actualicar_orden);
+     
+        } else {
+
+            print_r($response->status()->message() . "\n");
+
+        }
     }
 }
