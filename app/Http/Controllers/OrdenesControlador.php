@@ -93,7 +93,37 @@ class OrdenesControlador extends Controller
 
         if(count($ordenes_usr) > 0){
 
-            $respuesta = $ordenes_usr;
+            foreach($ordenes_usr as $key => $value){
+
+                $data['id_orden'] = $value['id_orden'];
+                $data['nombre'] = $value['nombre'];
+                $data['telefono'] = $value['telefono'];
+                $data['email'] = $value['email'];
+                $data['referencia_orden'] = $value['referencia_orden'];
+                $data['nombre_producto'] = $value['nombre_producto'];
+                $data['precio_producto'] = $value['precio_producto'];
+                $data['estado'] = $value['estado'];
+                $data['imagen_producto'] = $value['imagen_producto'];
+                $data['created_at'] = $value['created_at'];
+                $data['name'] = $value['name'];
+                $data['id'] = $value['id'];
+
+                if($value['estado'] == 'APPROVED'){
+
+                    $data['url_pago'] ='<div><a style="color: green" href="'.$value['url_pago']. '">Url de pago</a></div>';
+
+                    $data['boton'] = '<div class="btn-group"><button class="btn btn-success btn-sm"><i class="fa fa-check"></i></button></div>';
+
+                }else{
+
+                    $data['url_pago'] ='<div><a style="color: red" href="'.$value['url_pago']. '">Url de pago</a></div>';
+
+                    $data['boton'] = '<div class="btn-group"><button class="btn btn-warning btn-sm btnReintentarPago" id_cliente='.$value['id_cliente'].' llave_secreta='.$value['llave_secreta'].'><i class="fa fa-refresh"></i></button></div>';
+                }
+                
+
+                $respuesta[] = $data;
+            }
 
         }else{
 

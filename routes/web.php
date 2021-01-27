@@ -50,3 +50,6 @@ Route::get('/ver_ordenes_productos', 'OrdenesControlador@vistaOrdenesProductos')
 
 // Ruta para consultar la ordenes de un usuario
 Route::post('/ver_ordenes_usuario', 'OrdenesControlador@ordenesDeUsuario');
+
+// Ruta para consultar la ordenes de un usuario
+Route::post('/consultar_estado', 'ProcesarPago@consultarEstadoPago');

@@ -11,7 +11,9 @@ use App\Ordenes;
 
 class ProcesarPago extends Controller
 {
-    // Creación del objeto Pacetopay
+    /**
+     * Iniciar proceso de pago y obtener url de redireccion
+     */
     public function pagoPlaceToPay(Request $request)
     {
 
@@ -25,10 +27,10 @@ class ProcesarPago extends Controller
             ]
         ]);
 
-        //Creating a random reference for the test
-        $reference = 'TEST_' . time();
-
+        //Creando referencia
         $id = $request->input("id_orden");
+
+        $reference = $id.'TEST_' . time();
 
         $request = [
             'payment' => [
@@ -66,6 +68,9 @@ class ProcesarPago extends Controller
         }
     }
 
+    /**
+     * Procesar respuesta de pasarela de pago
+     */
     public function respuestaPlaceToPay(Request $request)
     {
         $placetopay = new PlacetoPay([
@@ -90,22 +95,28 @@ class ProcesarPago extends Controller
         $response = $placetopay->query($requestId);
 
         if ($response->isSuccessful()) {
+            
+            if($response->status()->status() == 'PENDING'){
 
-            if ($response->status()->isApproved()) {
-         
-            }
+                $datos = ['status' => $response->status()->status()];
 
-            $datos = ['status' => $response->payment[0]->status()->status(),
+            }else{
+
+                $datos = ['status' => $response->payment[0]->status()->status(),
                       'message' => $response->payment[0]->status()->message(),
                       'date_trans' => $response->payment[0]->status()->date(),
                       'method' => $response->payment[0]->paymentMethodName(),
                       'ref_int' => $response->payment[0]->internalReference(),
                       'bank' => $response->payment[0]->issuerName()
                     ];
+            }
 
             $actualicar_orden = Ordenes::where("reference", $referencia)->update($datos);
 
-            return json_encode($actualicar_orden);
+            if($actualicar_orden == 1){
+                header ("Location: http://localhost/frontend.evertec/");
+                exit();
+            }
      
         } else {
 
@@ -113,4 +124,13 @@ class ProcesarPago extends Controller
 
         }
     }
+
+    /**
+     * Consultar estado de la transacción
+     */
+    public function consultarEstadoPago(Request $request)
+    {
+        
+    }
+
 }
