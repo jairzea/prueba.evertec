@@ -13,7 +13,6 @@ class ProductosTest extends TestCase
     {
         $this->get('/productos')
              ->assertStatus(200)
-             ->assertSee('detalles')
              ->assertSee('name')
              ->assertSee('description')
              ->assertSee('price')
@@ -42,10 +41,11 @@ class ProductosTest extends TestCase
     /** @test */
     function testActualizarProductos()
     {
-        $this->put('/editar_producto/3', [
+        $this->post('/editar_producto', [
             "nombre" => "Prueba editado",
             "descripcion"  => "Este producto ha sido editado por una prueba unitaria",
             "precio" => "5500000",
+            "id" => "3",
         ])
              ->assertStatus(200)
              ->assertSee('Producto actualizado exitosamente');
