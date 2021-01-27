@@ -44,3 +44,8 @@
     ON o.id_product = p.id
 ```
 
+>Modifique la ruta base de los ENDPOINT con su dominio para el backend en el archivo VerifyCsrfToken.php:
+>>app/Http/Middleware/
+
+*Recuerde ubicar "/public/" entre la ruta base y su dominio*
+>>Ejemplo: http://sudominio.com/public/...
