@@ -42,7 +42,7 @@ class ProcesarPago extends Controller
                 ],
             ],
             'expiration' => date('c', strtotime('+2 days')),
-            'returnUrl' => 'http://apirest-tienda.evertec/respuestaPago?reference=' . $reference,
+            'returnUrl' => $request->input("urlRetorno").'?reference=' . $reference,
             'ipAddress' => '127.0.0.1',
             'userAgent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36',
         ];
@@ -59,7 +59,15 @@ class ProcesarPago extends Controller
 
             $actualicar_orden = Ordenes::where("id", $id)->update($respPlace);
 
-            echo json_encode($respPlace);
+            if($actualicar_orden == 1){
+
+                echo json_encode($respPlace);
+
+            }else{
+
+                echo json_encode('No se pudo actualizar la orden');
+            }
+            
         } else {
 
             $respPlace = $response->status()->message();

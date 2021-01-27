@@ -50,4 +50,9 @@
 *Recuerde ubicar "/public/" entre la ruta base y su dominio*
 >>Ejemplo: http://sudominio.com/public/...
 
-*En ocasiones al importar la base de datos, la columna: id no obtiene su propiedad de primary_key, revise la base de datos y si esto ha pasado, asigne a cada id de las tablas de la BD como primary_key*
+*El archivo de base de datos se encuentra en la carpeta raiz del backend*
+
+*En ocasiones al importar la base de datos, la columna: id no obtiene su propiedad de primary_key, revise la base de datos y si esto ha pasado, asigne a cada id de las tablas de la BD como primary_key y Auto_Increment*
+
+
+*Tambien debe cambiar en el controlador "ProcesarPago.php" la url o dominio base de la tienda (frontend), en la linea 125 (header ("Location: http://localhost/frontend.evertec/");)*
